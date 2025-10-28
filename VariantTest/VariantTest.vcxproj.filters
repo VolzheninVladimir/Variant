@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="RunTests.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="ConstructorsTest.cpp">
+      <Filter>VariantClassTest\ConstructorsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorsTest.cpp">
+      <Filter>VariantClassTest\OperatorsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="ValuelessByExceptTest.cpp">
+      <Filter>VariantClassTest\ValuelessByExceptTest</Filter>
+    </ClCompile>
+    <ClCompile Include="Getters.cpp">
+      <Filter>VariantClassTest\GettersTest</Filter>
+    </ClCompile>
+    <ClCompile Include="EmplaceMethodsTest.cpp">
+      <Filter>VariantClassTest\EmplaceMethodsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="SwapTest.cpp">
+      <Filter>VariantClassTest\SwapMethodTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="VariantClassTest">
+      <UniqueIdentifier>{6cabcab1-04c3-4696-af91-71f31cc0c8fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\ConstructorsTest">
+      <UniqueIdentifier>{988f4148-270a-446d-94d2-2572448d6747}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\GettersTest">
+      <UniqueIdentifier>{43472efd-d3d8-49f6-a68e-1bf9bdfbcf21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\EmplaceMethodsTest">
+      <UniqueIdentifier>{a85e99d5-76fc-4f20-b5b0-ab3fb19f4678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\SwapMethodTest">
+      <UniqueIdentifier>{e014611b-cc19-4747-b8d8-5f5d3539940e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\OperatorsTest">
+      <UniqueIdentifier>{2966aa3b-4998-45fa-8792-925ae2946e54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\ValuelessByExceptTest">
+      <UniqueIdentifier>{2b788870-30e7-4354-9d63-21bb3533364a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
