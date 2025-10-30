@@ -21,6 +21,9 @@
     <ClCompile Include="SwapTest.cpp">
       <Filter>VariantClassTest\SwapMethodTest</Filter>
     </ClCompile>
+    <ClCompile Include="VariantStaticTest.cpp">
+      <Filter>VariantClassTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

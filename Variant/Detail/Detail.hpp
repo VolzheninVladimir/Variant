@@ -69,5 +69,8 @@ namespace detail {
     }
 
     template<typename... Types>
-    constexpr bool _Are_unique_v = _are_unique_impl<Types...>();
+    concept _Is_pack_of_different_type = _are_unique_impl<Types...>();
+
+    template<typename... Types>
+    concept _Is_pack_not_empty = sizeof...(Types) > 0;
 }
