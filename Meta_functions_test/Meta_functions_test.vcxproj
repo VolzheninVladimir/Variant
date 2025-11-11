@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{810d538f-d25b-4b43-8e3e-152c7f4dc431}</ProjectGuid>
+    <ProjectGuid>{6183c433-8ad9-4e2b-a581-738986cd71aa}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ConfigurationType>Application</ConfigurationType>
@@ -42,7 +42,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\Variant\Variant;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Auxiliary_meta_functions\Auxiliary_meta_functions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -59,7 +59,7 @@
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
-      <AdditionalIncludeDirectories>..\Variant\Variant;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Auxiliary_meta_functions\Auxiliary_meta_functions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -75,7 +75,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\Variant\Variant;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Auxiliary_meta_functions\Auxiliary_meta_functions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -93,7 +93,7 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>..\Variant\Variant;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Auxiliary_meta_functions\Auxiliary_meta_functions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -107,14 +107,8 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConstexprTest.cpp" />
-    <ClCompile Include="ConstructorsTest.cpp" />
-    <ClCompile Include="EmplaceMethodsTest.cpp" />
-    <ClCompile Include="Getters.cpp" />
-    <ClCompile Include="HelperMethodsTest.cpp" />
-    <ClCompile Include="SwapMethodTest.cpp" />
-    <ClCompile Include="OperatorsTest.cpp" />
-    <ClCompile Include="RunTests.cpp" />
+    <ClCompile Include="Meta_functions_test.cpp" />
+    <ClCompile Include="RunTest.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -128,12 +122,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Auxiliary_meta_functions\Auxiliary_meta_functions.vcxproj">
       <Project>{e1faa4f9-3470-469f-a502-3c9581bfc891}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\VariadicUnion\VariadicUnion.vcxproj">
-      <Project>{0668ff62-738e-4642-81d7-ea5949be88de}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Variant\Variant.vcxproj">
-      <Project>{d4b02d37-d63d-4c14-9524-5c4bb7bb1747}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

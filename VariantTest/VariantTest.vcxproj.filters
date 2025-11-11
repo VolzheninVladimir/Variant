@@ -9,19 +9,19 @@
     <ClCompile Include="OperatorsTest.cpp">
       <Filter>VariantClassTest\OperatorsTest</Filter>
     </ClCompile>
-    <ClCompile Include="ValuelessByExceptTest.cpp">
-      <Filter>VariantClassTest\ValuelessByExceptTest</Filter>
-    </ClCompile>
     <ClCompile Include="Getters.cpp">
       <Filter>VariantClassTest\GettersTest</Filter>
     </ClCompile>
     <ClCompile Include="EmplaceMethodsTest.cpp">
       <Filter>VariantClassTest\EmplaceMethodsTest</Filter>
     </ClCompile>
-    <ClCompile Include="SwapTest.cpp">
+    <ClCompile Include="SwapMethodTest.cpp">
       <Filter>VariantClassTest\SwapMethodTest</Filter>
     </ClCompile>
-    <ClCompile Include="VariantStaticTest.cpp">
+    <ClCompile Include="HelperMethodsTest.cpp">
+      <Filter>VariantClassTest\HelperMethodsTest</Filter>
+    </ClCompile>
+    <ClCompile Include="ConstexprTest.cpp">
       <Filter>VariantClassTest</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,17 +41,17 @@
     <Filter Include="VariantClassTest\GettersTest">
       <UniqueIdentifier>{43472efd-d3d8-49f6-a68e-1bf9bdfbcf21}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VariantClassTest\EmplaceMethodsTest">
-      <UniqueIdentifier>{a85e99d5-76fc-4f20-b5b0-ab3fb19f4678}</UniqueIdentifier>
-    </Filter>
     <Filter Include="VariantClassTest\SwapMethodTest">
       <UniqueIdentifier>{e014611b-cc19-4747-b8d8-5f5d3539940e}</UniqueIdentifier>
     </Filter>
     <Filter Include="VariantClassTest\OperatorsTest">
       <UniqueIdentifier>{2966aa3b-4998-45fa-8792-925ae2946e54}</UniqueIdentifier>
     </Filter>
-    <Filter Include="VariantClassTest\ValuelessByExceptTest">
-      <UniqueIdentifier>{2b788870-30e7-4354-9d63-21bb3533364a}</UniqueIdentifier>
+    <Filter Include="VariantClassTest\EmplaceMethodsTest">
+      <UniqueIdentifier>{a85e99d5-76fc-4f20-b5b0-ab3fb19f4678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VariantClassTest\HelperMethodsTest">
+      <UniqueIdentifier>{dd0ac6f3-c25b-488d-bd6a-37ab29915d4a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -134,6 +134,12 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Auxiliary_meta_functions\Auxiliary_meta_functions.vcxproj">
+      <Project>{e1faa4f9-3470-469f-a502-3c9581bfc891}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\VariadicUnion\VariadicUnion.vcxproj">
+      <Project>{0668ff62-738e-4642-81d7-ea5949be88de}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\Variant\Variant.vcxproj">
       <Project>{d4b02d37-d63d-4c14-9524-5c4bb7bb1747}</Project>
     </ProjectReference>

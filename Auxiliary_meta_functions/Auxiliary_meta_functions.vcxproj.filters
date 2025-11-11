@@ -15,12 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Variant\Variant.hpp">
+    <ClInclude Include="Auxiliary_meta_functions\Auxiliary_meta_functions.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="detail\Getters.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="detail\Traits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Variant\Variant.cpp">
+    <ClCompile Include="Auxiliary_meta_functions\Auxiliary_meta_functions.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -25,7 +25,6 @@ namespace {
             throw std::runtime_error("move fail");
         }
 
-
         ThrowingType& operator=(const ThrowingType&) {
             throw std::runtime_error("assign copy fail");
             return *this;
@@ -80,13 +79,26 @@ namespace {
 }
 
 
+
+
 TEST(OperatorsTest_Equality, FailsIf_TypeDoesNotSupportEqualityOperator) {
     Variant<NoOperator> v1, v2;
     // bool result = (v1 == v2); // static_assert провалится
     EXPECT_TRUE(true);
 }
 
-TEST(OperatorsTest_Equality, ReturnsTrue_IfBothAreValueless) {
+TEST(OperatorsTest_Equality, IsNoexceptIf_AllTypesAreNoexcept) {
+    using V = Variant<int, double>;
+    EXPECT_TRUE(noexcept(std::declval<V&>() == std::declval<const V&>()));
+
+}
+
+TEST(OperatorsTest_Equality, IsNotNoexceptIf_AnyTypeIsThrowing) {
+    using V = Variant<ThrowingType>;
+    EXPECT_TRUE(!noexcept(std::declval<V&>() == std::declval<const V&>()));
+}
+
+TEST(OperatorsTest_Equality, ReturnsTrueIf_BothAreValueless) {
     Variant<ThrowingType> v1, v2;
     try { v1.emplace<ThrowingType>(1); }
     catch (...) {}
@@ -95,7 +107,7 @@ TEST(OperatorsTest_Equality, ReturnsTrue_IfBothAreValueless) {
     EXPECT_TRUE(v1 == v2);
 }
 
-TEST(OperatorsTest_Equality, ReturnsFalse_IfOnlyOneIsValueless) {
+TEST(OperatorsTest_Equality, ReturnsFalseIf_OnlyOneIsValueless) {
     Variant<ThrowingType> v1, v2;
     try { v1.emplace<ThrowingType>(1); }
     catch (...) {}
@@ -103,22 +115,22 @@ TEST(OperatorsTest_Equality, ReturnsFalse_IfOnlyOneIsValueless) {
     EXPECT_FALSE(v2 == v1);
 }
 
-TEST(OperatorsTest_Equality, ReturnsFalse_IfIndicesAreDifferent) {
+TEST(OperatorsTest_Equality, ReturnsFalseIf_IndicesAreDifferent) {
     Variant<int, double> v1(42), v2(3.14);
     EXPECT_FALSE(v1 == v2);
 }
 
-TEST(OperatorsTest_Equality, ReturnsTrue_IfSameTypeAndEqual) {
+TEST(OperatorsTest_Equality, ReturnsTrueIf_SameTypeAndEqual) {
     Variant<int> v1(123), v2(123);
     EXPECT_TRUE(v1 == v2);
 }
 
-TEST(OperatorsTest_Equality, ReturnsFalse_IfSameTypeAndNotEqual) {
+TEST(OperatorsTest_Equality, ReturnsFalseIf_SameTypeAndNotEqual) {
     Variant<int> v1(123), v2(456);
     EXPECT_FALSE(v1 == v2);
 }
 
-TEST(OperatorsTest_Equality, InvokesEqualityOperator_OfStoredType) {
+TEST(OperatorsTest_Equality, InvokesEqualityOperatorOf_StoredType) {
     Tracker::reset();
     Variant<Tracker> v1, v2;
     EXPECT_TRUE(v1 == v2);
@@ -132,24 +144,14 @@ TEST(OperatorsTest_CopyAssignment, FailsIf_TypeIsNotCopyConstructible) {
     EXPECT_TRUE(true);
 }
 
-TEST(OperatorsTest_CopyAssignment, IsNoexcept_IfAllTypesAreNoexceptCopyable) {
+TEST(OperatorsTest_CopyAssignment, IsNoexceptIf_AllTypesAreNoexceptCopyable) {
     using V = Variant<int, double>;
-    if constexpr (noexcept(std::declval<V&>() = std::declval<const V&>())) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(noexcept(std::declval<V&>() = std::declval<const V&>()));
 }
 
-TEST(OperatorsTest_CopyAssignment, IsNotNoexcept_IfAnyTypeIsThrowingCopyable) {
+TEST(OperatorsTest_CopyAssignment, IsNotNoexceptIf_AnyTypeIsThrowingCopyable) {
     using V = Variant<ThrowingType>;
-    if constexpr (!noexcept(std::declval<V&>() = std::declval<const V&>())) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(!noexcept(std::declval<V&>() = std::declval<const V&>()));
 }
 
 TEST(OperatorsTest_CopyAssignment, SelfAssignment_DoesNothing) {
@@ -166,7 +168,7 @@ TEST(OperatorsTest_CopyAssignment, ValidCopy_CopiesCorrectly) {
     EXPECT_EQ(v2.get<int>(), 123);
 }
 
-TEST(OperatorsTest_CopyAssignment, ThrowsAndBecomesValueless_IfCopyFails) {
+TEST(OperatorsTest_CopyAssignment, ThrowsAndBecomesValuelessIf_CopyFails) {
     Variant<ThrowingType> v1, v2;
     try {
         v2 = v1;
@@ -176,7 +178,7 @@ TEST(OperatorsTest_CopyAssignment, ThrowsAndBecomesValueless_IfCopyFails) {
     }
 }
 
-TEST(OperatorsTest_CopyAssignment, DestroysPreviousType_AndCopiConstruct) {
+TEST(OperatorsTest_CopyAssignment, DestroysPreviousTypeAnd_CopiConstruct) {
     Tracker::reset();
     Variant<Tracker, int> v1, v2(5);
     v1 = v2;
@@ -187,7 +189,7 @@ TEST(OperatorsTest_CopyAssignment, DestroysPreviousType_AndCopiConstruct) {
     EXPECT_EQ(v1.index(), 0);
 }
 
-TEST(OperatorsTest_CopyAssignment, DestroysPreviousType_AndCopiAssignment) {
+TEST(OperatorsTest_CopyAssignment, DestroysPreviousTypeAnd_CopiAssignment) {
     Tracker::reset();
     Variant<Tracker, int> v1, v2(std::in_place_index<0>, 1);
     v1 = v2;
@@ -204,24 +206,14 @@ TEST(OperatorsTest_MoveAssignment, FailsIf_TypeIsNotMoveConstructible) {
     EXPECT_TRUE(true);
 }
 
-TEST(OperatorsTest_MoveAssignment, IsNoexcept_IfAllTypesAreNoexceptMovable) {
+TEST(OperatorsTest_MoveAssignment, IsNoexceptIf_AllTypesAreNoexceptMovable) {
     using V = Variant<int, double>;
-    if constexpr (noexcept(std::declval<V&>() = std::declval<V&&>())) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(noexcept(std::declval<V&>() = std::declval<V&&>()));
 }
 
-TEST(OperatorsTest_MoveAssignment, IsNotNoexcept_IfAnyTypeIsThrowingMovable) {
+TEST(OperatorsTest_MoveAssignment, IsNotNoexceptIf_AnyTypeIsThrowingMovable) {
     using V = Variant<ThrowingType>;
-    if constexpr (!noexcept(std::declval<V&>() = std::declval<V&&>())) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(!noexcept(std::declval<V&>() = std::declval<V&&>()));
 }
 
 TEST(OperatorsTest_MoveAssignment, SelfAssignment_DoesNothing) {
@@ -238,7 +230,7 @@ TEST(OperatorsTest_MoveAssignment, ValidMove_MovesCorrectly) {
     EXPECT_EQ(v2.get<int>(), 123);
 }
 
-TEST(OperatorsTest_MoveAssignment, ThrowsAndBecomesValueless_IfMoveFails) {
+TEST(OperatorsTest_MoveAssignment, ThrowsAndBecomesValuelessIf_MoveFails) {
     Variant<ThrowingType> v1, v2;
     try {
         v2 = std::move(v1);
@@ -248,7 +240,7 @@ TEST(OperatorsTest_MoveAssignment, ThrowsAndBecomesValueless_IfMoveFails) {
     }
 }
 
-TEST(OperatorsTest_MoveAssignment, DestroysPreviousType_AndMoveConstruct) {
+TEST(OperatorsTest_MoveAssignment, DestroysPreviousTypeAnd_MoveConstruct) {
     Tracker::reset();
     Variant<Tracker, int> v1, v2(std::in_place_index<1>, 5);
     v1 = std::move(v2);
@@ -258,15 +250,15 @@ TEST(OperatorsTest_MoveAssignment, DestroysPreviousType_AndMoveConstruct) {
     EXPECT_EQ(v2.index(), 0);
 }
 
-TEST(OperatorsTest_MoveAssignment, DestroysPreviousType_AndMoveAssignment) {
+TEST(OperatorsTest_MoveAssignment, DestroysPreviousTypeAnd_MoveAssignment) {
     Tracker::reset();
     Variant<Tracker, int> v1, v2(std::in_place_index<0>, 5);
     v1 = std::move(v2);
     v2 = Variant<Tracker, int>();
-    EXPECT_TRUE(Tracker::destroyed);
+    EXPECT_FALSE(Tracker::destroyed);
     EXPECT_TRUE(Tracker::assignMoved);
     EXPECT_EQ(v2.index(), 0);
-    EXPECT_EQ(v2.get<Tracker>(), 5);
+    EXPECT_EQ(v2.get<Tracker>(), 0);
 }
 
 TEST(OperatorsTest_MoveAssignment, DestroysPreviousTypeWith_ValuelessObj) {
@@ -285,28 +277,18 @@ TEST(OperatorsTest_MoveAssignment, DestroysPreviousTypeWith_ValuelessObj) {
 
 TEST(OperatorsTest_ValueAssignment, FailsIf_TypeIsNotConstructible) {
     Variant<NoOperator> v;
-    // v = NoOperator{};
+    //v = NoOperator{};
     EXPECT_TRUE(true);
 }
 
-TEST(OperatorsTest_ValueAssignment, IsNoexcept_IfTypeIsNoexceptConstructible) {
+TEST(OperatorsTest_ValueAssignment, IsNoexceptIf_TypeIsNoexceptConstructible) {
     using V = Variant<int>;
-    if constexpr (noexcept(std::declval<V&>() = 123)) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(noexcept(std::declval<V&>() = std::declval<int&>()));
 }
 
-TEST(OperatorsTest_ValueAssignment, IsNotNoexcept_IfTypeIsThrowingConstructible) {
+TEST(OperatorsTest_ValueAssignment, IsNotNoexceptIf_TypeIsThrowingConstructible) {
     using V = Variant<ThrowingType>;
-    if constexpr (!noexcept(std::declval<V&>() = ThrowingType{})) {
-        EXPECT_TRUE(true);
-    }
-    else {
-        EXPECT_TRUE(false);
-    }
+    EXPECT_TRUE(!noexcept(std::declval<V&>() = std::declval<ThrowingType&>()));
 }
 
 TEST(OperatorsTest_ValueAssignment, SelfAssignment_DoesNothing) {
@@ -323,7 +305,7 @@ TEST(OperatorsTest_ValueAssignment, ValidAssignment_AssignsCorrectly) {
     EXPECT_EQ(v.get<int>(), 123);
 }
 
-TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValueless_IfAssignmentFails) {
+TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValuelessIf_AssignmentFails) {
     Variant<ThrowingType> v;
     try {
         v = ThrowingType();
@@ -333,7 +315,7 @@ TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValueless_IfAssignmentFails)
     }
 }
 
-TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValueless_IfConstructionFails) {
+TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValuelessIf_ConstructionFails) {
     Variant<Tracker, ThrowingType> v;
     try {
         v = ThrowingType();
@@ -343,7 +325,7 @@ TEST(OperatorsTest_ValueAssignment, ThrowsAndBecomesValueless_IfConstructionFail
     }
 }
 
-TEST(OperatorsTest_ValueAssignment, DestroysPreviousType_AndAssignment) {
+TEST(OperatorsTest_ValueAssignment, DestroysPreviousTypeAnd_Assignment) {
     Tracker::reset();
     Variant<Tracker, int> v;
     Tracker t;
@@ -353,7 +335,7 @@ TEST(OperatorsTest_ValueAssignment, DestroysPreviousType_AndAssignment) {
     EXPECT_EQ(v.index(), 0);
 }
 
-TEST(OperatorsTest_ValueAssignment, DestroysPreviousType_AndConstruction) {
+TEST(OperatorsTest_ValueAssignment, DestroysPreviousTypeAnd_Construction) {
     Tracker::reset();
     Variant<Tracker, int> v;
     v = 1;

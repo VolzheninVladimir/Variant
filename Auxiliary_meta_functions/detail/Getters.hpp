@@ -1,6 +1,6 @@
 #pragma once
 
-namespace detail {
+namespace meta_functions {
     template<size_t I, typename... Types>
     struct _Get_type;
 
@@ -47,30 +47,4 @@ namespace detail {
 
     template<typename Type, typename... Types>
     static constexpr size_t _Get_index_v = _Get_index<Type, Types...>::value;
-
-
-    template<typename T, typename... Types>
-    concept _Is_type_present = (std::is_same_v<T, Types> || ...);
-
-
-    template<std::size_t I, typename... Types>
-    concept _Is_index_of_alternative = (I < sizeof...(Types));
-
-
-    template<typename Type, typename... Types>
-    constexpr bool _are_unique_impl() {
-        if constexpr (sizeof...(Types) == 0) {
-            return true;
-        }
-        else {
-            return ((!std::is_same_v<Type, Types>) && ...) 
-                && _are_unique_impl<Types...>();
-        }
-    }
-
-    template<typename... Types>
-    concept _Is_pack_of_different_type = _are_unique_impl<Types...>();
-
-    template<typename... Types>
-    concept _Is_pack_not_empty = sizeof...(Types) > 0;
 }
